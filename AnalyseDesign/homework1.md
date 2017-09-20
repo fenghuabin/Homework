@@ -1,6 +1,6 @@
 # 第一次题目
 
-![](/home/hbfeng/Document/LecturePPT/AnalyseDesign/算法设计作业1.png)
+![](./算法设计作业1.png)
 
 Ex.1 若将 y=uniform(0,1)修改为y=x，则上述算法的估计值是：2×√2
 
@@ -140,10 +140,91 @@ int main(){
 10 million:-0.665241
 ```
 
+## Ex4
+
+如下是估计一个集合的势的代码：
+```c
+SetCount (X) {
+		k ← 0; S ← Ф;
+		a ← uniform(X);
+		do {
+			k++;
+			S ← S∪{a}; a ← uniform(X);
+		} while (a ∉ S)
+		return 2k2/π
+	}
+
+```
+用上述算法，估计整数子集1~n的大小，并分析n对估计值的影响。
+
+用该算法估计C语言中ramdom()函数产生的最大值。
+
+```c++
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
+#include <vector>
+#include <algorithm>
+
+#define PI 3.1415926
+
+using namespace std;
+
+long int uniform(){
+    return random();
+}
 
 
 
+double SetCount(){
+    double k = 0;
+    vector<int> S;
+    long int a = uniform();
+    bool isChecked = false;
+    do{
+        k++;
+        S.push_back(a);
+        a = uniform();
+        vector<int>::iterator iter = std::find(S.begin(),S.end(),a);
+        if(iter!=S.end()){
+            isChecked = true;
+        }
+    }while(!isChecked);
+    return 2*k*k/PI;
+}
 
+int main(){
+    srandom(time(NULL));
+    printf("RAND_MAX:%d\n",RAND_MAX);
+    printf("Evaluate:%.0lf\n",SetCount());
+    return 0;
+}
+```
+实验结果：
+#### 第一次：
+```
+RAND_MAX:2147483647
+Evaluate:37951351
+```
+
+#### 第二次：
+```
+RAND_MAX:2147483647
+Evaluate:2915055392
+```
+
+#### 第三次：
+```
+RAND_MAX:2147483647
+Evaluate:3683311513
+```
+
+#### 第四次：
+```
+RAND_MAX:2147483647
+Evaluate:4683398122
+```
 
 
 
