@@ -10,7 +10,7 @@
 using namespace std;
 
 long int uniform(){
-    return random()%(RAND_MAX/4);
+    return random()%(RAND_MAX);
 }
 
 
@@ -34,8 +34,18 @@ double SetCount(){
 
 int main(){
     srandom(time(NULL));
-    printf("RAND_MAX:%d\n",RAND_MAX/4);
-    printf("Evaluate:%.0lf\n",SetCount());
+    printf("RAND_MAX:%d\n",RAND_MAX);
+    const int times = 15;
+    double v[times] = {0};
+    for(int i=0;i<times;++i){
+        v[i] = SetCount();
+    }
+    double evaluate = 0;
+    for(int i=0;i<times;++i){
+        evaluate += v[i];
+    }
+    evaluate /= times;
+    printf("Evaluate:%.0lf\n",evaluate);
     return 0;
 }
 
